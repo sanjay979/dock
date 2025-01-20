@@ -1,0 +1,33 @@
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.display-documents{
+  display: flex;
+  flex-direction: row;
+}
+
+.file-upload{
+  width: 1200px;
+  border: 1px solid rgb(176 174 174);
+  padding: 10px;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+.file-upload-header{
+  border-bottom: 1px solid rgb(176 174 174);
+  padding-bottom: 5px;
+}
+.file-upload-btn{
+  margin-right: 10px;
+}
+.cancelbtn{
+  background-color: rgb(124, 104, 104);
+  border: none;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  margin-left: 10px;
+}
