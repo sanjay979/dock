@@ -47,6 +47,9 @@ const App = () => {
     } else {
       alert("Please provide a document name.");
     }
+    if(activeDocIndex==null){
+      setActiveDocIndex(0)
+    }
   };
 
   // Set active document for upload or select action
@@ -216,6 +219,7 @@ const goToPrevApp = () => {
                 style={{
                   ...styles.navItem,
                   borderBottom: selectedApp === app.name ? "1px solid #3b82f6" : "1px solid #f1f1f1",
+                  color:selectedApp===app.name?"#3b82f6":"black",
                   
                 }}
               >
