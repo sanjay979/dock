@@ -91,7 +91,7 @@ const App = () => {
   return (
     <div style={styles.container}>
       <div className="header">
-        <h2 style={styles.title}>Document Upload</h2>
+        <h1 style={styles.title}>Document Upload</h1>
         <div style={styles.form}>
           <button onClick={() => setShowModal(true)} style={styles.button}>
             <i className="fas fa-plus"></i> Add Application
@@ -147,7 +147,7 @@ const App = () => {
 
       <div style={styles.navbar}>
         {applications.length === 0 ? (
-          <p style={{ ...styles.navItem, color: "gray" }}>No applications available</p>
+          <p style={{ ...styles.navItem, color: "gray" }}></p>
         ) : (
           applications.map((app) => (
             <div key={app.name} style={styles.navItemContainer}>
@@ -194,7 +194,7 @@ const App = () => {
                   </div>
                 ))
             ) : (
-              <p style={{ ...styles.document, color: "gray" }}>Select an application to view documents</p>
+              <p style={{ ...styles.document, color: "gray" }}></p>
             )}
           </div>
 
