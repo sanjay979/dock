@@ -73,20 +73,77 @@ const App = () => {
       )
     );
   };
+  // Go to the next document in the sequence
+// Go to the next document in the sequence
+const goToNextDoc = () => {
+ 
+  
+  const currentApp = applications[currentAppIndex];
+  const currentDoc = currentApp.documents[activeDocIndex];
 
-  const goToNextApp = () => {
-    if (currentAppIndex < applications.length - 1) {
-      setCurrentAppIndex(currentAppIndex + 1);
-      setSelectedApp(applications[currentAppIndex + 1].name);
+  if (currentDoc) {
+    // Check if there's a next document in the current application
+    const nextDocIndex = activeDocIndex + 1;
+    if (nextDocIndex < currentApp.documents.length) {
+      setActiveDocIndex(nextDocIndex);  // Move to next document
+    } else {
+      // No more documents in this application, switch to the next application
+      goToNextApp();  // Move to next application (and start with the first document)
+      setActiveDocIndex(0)
     }
-  };
+  }
+};
 
-  const goToPrevApp = () => {
-    if (currentAppIndex > 0) {
-      setCurrentAppIndex(currentAppIndex - 1);
-      setSelectedApp(applications[currentAppIndex - 1].name);
+// Go to the previous document in the sequence
+const goToPrevDoc = () => {
+
+
+  const currentApp = applications[currentAppIndex];
+  const currentDoc = currentApp.documents[activeDocIndex];
+
+  if (currentDoc) {
+    // Check if there's a previous document in the current application
+    const prevDocIndex = activeDocIndex - 1;
+    if (prevDocIndex >= 0) {
+      setActiveDocIndex(prevDocIndex); // Move to previous document
+    } else {
+      // No previous document in this application, switch to the previous application
+      goToPrevApp(); // Move to previous application
+      const newApp = applications[currentAppIndex]; // Updated current application after goToPrevApp()
+      
+      if (newApp && newApp.documents.length > 0) {
+        // Set the index to the last document in the new application
+        setActiveDocIndex(newApp.documents.length - 1);
+      } else {
+        console.error("Previous application has no documents.");
+      }
     }
-  };
+  }
+};
+
+
+const goToNextApp = () => {
+  if (currentAppIndex < applications.length - 1) {
+    setCurrentAppIndex(currentAppIndex + 1);
+    setSelectedApp(applications[currentAppIndex + 1].name);
+  }else{
+    setCurrentAppIndex(0)
+    setSelectedApp(applications[0].name);
+  }
+};
+
+const goToPrevApp = () => {
+  if (currentAppIndex > 0) {
+    setCurrentAppIndex(currentAppIndex - 1);
+    setSelectedApp(applications[currentAppIndex - 1].name);
+  }else{
+    setSelectedApp(applications[applications.length - 1].name);
+    setCurrentAppIndex(applications.length - 1)
+  }
+};
+
+
+  
 
   return (
     <div style={styles.container}>
@@ -180,18 +237,18 @@ const App = () => {
                 .find((app) => app.name === selectedApp)
                 ?.documents.map((doc, index) => (
                   <div
-                    key={doc.name}
-                    style={{
-                      ...styles.documentBox,
-                      background: activeDocIndex === index ? "#3b82f6" : "#fff",
-                      color:activeDocIndex===index?"white":"black",
-                    }}
-                    onClick={() => setActiveDoc(index)}
-                  >
-                    <strong>{doc.name}</strong>
-                   
-                   
-                  </div>
+                   key={doc.name}
+                   style={{
+                     ...styles.documentBox,
+                     background: activeDocIndex === index ? "#3b82f6" : "#fff",
+                     color: activeDocIndex === index ? "white" : "black",
+                   }}
+                   onClick={() => setActiveDocIndex(index)} // Ensure active document is clickable
+                 >
+                   <strong>{doc.name}</strong>
+                 </div>
+
+                
                 ))
             ) : (
               <p style={{ ...styles.document, color: "gray" }}></p>
@@ -266,8 +323,8 @@ const App = () => {
       </div>
 
       <div style={styles.navButtons}>
-        <button onClick={goToPrevApp} disabled={currentAppIndex <= 0} style={styles.navButton}><i class="fa-solid fa-arrow-left"></i>&nbsp;Back</button>
-        <button onClick={goToNextApp} disabled={currentAppIndex >= applications.length - 1} style={styles.navButton}><i class="fa-solid fa-arrow-right"></i> &nbsp;Next</button>
+        <button onClick={goToPrevDoc}  style={styles.navButton}><i class="fa-solid fa-arrow-left"></i>&nbsp;Back</button>
+        <button onClick={goToNextDoc}  style={styles.navButton}><i class="fa-solid fa-arrow-right"></i> &nbsp;Next</button>
 
       </div>
       <hr />
